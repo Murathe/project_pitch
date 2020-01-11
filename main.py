@@ -1,10 +1,23 @@
-from flask import Flask,render_template
+from flask import Flask,render_template, url_for
+from forms import Signup_form, Signin_form
 main = Flask(__name__)
+
+main.config['SECRET_KEY'] = '35c918c62246'
+
+eg = [
+    {'one' : 'baby'}
+    {'two': 'mother'}
+    {'three': 'father'}
+]
+
+
+
+
 
 @main.route('/')
 @main.route('/index')
 def Index:
-    return render_template('index.html')
+    return render_template('index.html', eg=eg)
 
 @main.route('/interview')
 def Interview:
