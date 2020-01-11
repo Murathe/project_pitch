@@ -11,13 +11,24 @@ eg = [
 ]
 
 
-
-
-
 @main.route('/')
 @main.route('/index')
 def Index:
     return render_template('index.html', eg=eg)
+
+@main.route('/signup')
+def Signup:
+
+    form = Signup_form()
+
+    return render_template('sign_up', title='Sign Up', form=form)
+
+@main.route('/signin')
+def Signup:
+
+    form = Signup_form()
+
+    return render_template('sign_up', title='Sign Up', form=form)
 
 @main.route('/interview')
 def Interview:
