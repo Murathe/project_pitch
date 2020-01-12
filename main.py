@@ -4,6 +4,7 @@ from forms import SignupForm, SigninForm
 main = Flask(__name__)
 
 main.config['SECRET_KEY'] = '35c918c62246'
+main.config['SQLALCHEMY_DATABASE_URI'] = 'sqllite:///site.db'
 
 egs = [
     {'one' : 'baby',
