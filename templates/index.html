@@ -1,0 +1,10 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    {% for eg in egs %}
+        <p>{{ eg.one }}</p>
+        <p>{{ eg.two }}</p>
+        <p>{{ eg.three }}</p>
+    {% endfor %}
+{% endblock content %}
+    
