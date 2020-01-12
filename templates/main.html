@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="utf-8">
+    {% if title %}
+        <title>{{ title }}</title>
+    {% else %}
+        <title>Project Pitch</title>
+    {% endif %}
+</head>
+<body>
+    <div class="container">
+        <div class="row jumbotron">
+            <div class="col-md-4">
+                <h2>Project Pitch</h2>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ url_for('index') }}">Home</a>
+                <a href="{{ url_for('index') }}">Pitch</a>
+                <a href="{{ url_for('Signup') }}">Sign Up</a>
+                <a href="{{ url_for('Signin') }}">Sign In</a>
+            </div>
+        </div>
+        {% block content %}
+
+        {% endblock content %}
+    </div>
+</body>
+</html>
