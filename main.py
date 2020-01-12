@@ -1,10 +1,18 @@
 from flask import Flask,render_template, url_for, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 from forms import SignupForm, SigninForm
-main = Flask(__name__)
 
+main = Flask(__name__)
 main.config['SECRET_KEY'] = '35c918c62246'
 main.config['SQLALCHEMY_DATABASE_URI'] = 'sqllite:///site.db'
+
+db = SQLAlchemy(main) 
+
+class User(db.Model):
+    id = db.column(db.Interger, primary_key=True)
+    username = db.column(db.String(15), unique=True, nullable=False)
+    email = db.Column(db.String(15), unique=True, nullable=False)
+    image_file = db.Column(db.String(15), nullable=False, default='default.jpg') 
 
 egs = [
     {'one' : 'baby',
