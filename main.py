@@ -1,5 +1,6 @@
 from flask import Flask,render_template, url_for, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 from forms import SignupForm, SigninForm
 
 main = Flask(__name__)
@@ -12,7 +13,20 @@ class User(db.Model):
     id = db.column(db.Interger, primary_key=True)
     username = db.column(db.String(15), unique=True, nullable=False)
     email = db.Column(db.String(15), unique=True, nullable=False)
+    password = db.Column(db.String(50), nullable=False)
     image_file = db.Column(db.String(15), nullable=False, default='default.jpg') 
+
+    def __repr__(self):
+        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+
+class Post(db.model):
+    id = db.Column(db.Interger, primary_key=True)
+    title = db.Column(db.String(50), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    content = db.Column(db.Text, nullable=False)
+
+    def __repr__(self):
+        return f"Post('{self.title}', '{self.date_posted}', '{self.content}')"
 
 egs = [
     {'one' : 'baby',
