@@ -1,4 +1,5 @@
 from flask import Flask,render_template, url_for, flash, redirect
+from flask_sqlalchemy import SQLAlchemy
 from forms import SignupForm, SigninForm
 main = Flask(__name__)
 
@@ -28,12 +29,15 @@ def Signup():
 
     return render_template('sign_up.html', title='Sign Up', form=form)
 
-@main.route('/signin')
+@main.route('/signin', methods=['GET', 'POST'])
 def Signin():
     form = SigninForm()
     if form.validate_on_submit():
-        flash(f'Welcome back {form.username.data}!', 'success')
-        return redirect(url_for('index'))
+        if form.email.data == 'murathe@gmail.com' and form.password.data == 'murathe':
+            flash(f'Succesfully logged in', 'success')
+            return redirect(url_for('index'))
+        else:
+            flash(f'Wrong credentials entered, please retry.', 'danger')
     return render_template('sign_in.html', title='Sign In', form=form)
 
 @main.route('/interview')
