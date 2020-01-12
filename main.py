@@ -19,19 +19,21 @@ egs = [
 def index():
     return render_template('index.html', title='Project Pitch', egs=egs)
 
-@main.route('/signup')
+@main.route('/signup', methods=['GET', 'POST'])
 def Signup():
     form = SignupForm()
     if form.validate_on_submit():
-        flash(f'Account created succesfully for {form.username.data}.', 'success')
-         
+        flash(f'Account created succesfully for {form.username.data}!', 'success')
+        return redirect(url_for('index'))
 
     return render_template('sign_up.html', title='Sign Up', form=form)
 
 @main.route('/signin')
 def Signin():
     form = SigninForm()
-
+    if form.validate_on_submit():
+        flash(f'Welcome back {form.username.data}!', 'success')
+        return redirect(url_for('index'))
     return render_template('sign_in.html', title='Sign In', form=form)
 
 @main.route('/interview')
