@@ -14,7 +14,8 @@ class User(db.Model):
     username = db.column(db.String(15), unique=True, nullable=False)
     email = db.Column(db.String(15), unique=True, nullable=False)
     password = db.Column(db.String(50), nullable=False)
-    image_file = db.Column(db.String(15), nullable=False, default='default.jpg') 
+    image_file = db.Column(db.String(15), nullable=False, default='default.jpg')
+    posts = db.relationship('Post', backref='author', lazy=True)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
@@ -26,7 +27,7 @@ class Post(db.model):
     content = db.Column(db.Text, nullable=False)
 
     def __repr__(self):
-        return f"Post('{self.title}', '{self.date_posted}', '{self.content}')"
+        return f"Post('{self.title}', '{self.date_posted}', )"
 
 egs = [
     {'one' : 'baby',
