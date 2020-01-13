@@ -25,18 +25,19 @@ class Post(db.model):
     title = db.Column(db.String(50), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     content = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Interger, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}', )"
 
 egs = [
-    {'one' : 'baby',
-    'two': 'mother',
-    'three': 'father'},
+    {'title' : 'baby',
+    'author': 'mother',
+    'content': 'father'},
 
-    {'one' : 'babies',
-    'two': 'mothers',
-    'three': 'fathers'}
+    {'title' : 'baby',
+    'author': 'mother',
+    'content': 'father'}
 ]
 
 @main.route('/')
@@ -63,6 +64,10 @@ def Signin():
         else:
             flash(f'Wrong credentials entered, please retry.', 'danger')
     return render_template('sign_in.html', title='Sign In', form=form)
+
+@main.route('/profile')
+def Profile():
+    return render_template('profile.html', title='Profile')
 
 @main.route('/interview')
 def Interview():
