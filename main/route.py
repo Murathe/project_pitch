@@ -26,7 +26,7 @@ def Signup():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         db.session.add(user)
         db.session.commit()
-        flash(f'Account created succesfully for {form.username.data}!', 'success')
+        flash(f'Account created succesfully, log in to continue!', 'success')
         return redirect(url_for('index'))
 
     return render_template('sign_up.html', title='Sign Up', form=form)
