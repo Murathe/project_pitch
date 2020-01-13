@@ -24,6 +24,8 @@ def Signup():
     form = SignupForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        db.session.add(user)
+        db.session.commit()
         flash(f'Account created succesfully for {form.username.data}!', 'success')
         return redirect(url_for('index'))
 
