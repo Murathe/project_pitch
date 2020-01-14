@@ -1,4 +1,5 @@
-from flask_sqlalchemy import SQLAlchemy
+from flask import Blueprint
 
-bootstrap = Bootstrap()
-db = SQLAlchemy()
+auth = Blueprint('auth',__name__)
+
+from . import views,forms
