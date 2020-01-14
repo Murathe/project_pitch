@@ -11,30 +11,16 @@
     {% endif %}
 </head>
 <body>
-    <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="collapse navbar-collapse" id="navbarText">
-            <a class="navbar-brand" href="{{ url_for('index') }}">Home</a>
-            <span class="navbar-text">Take your best shot, it's pitching time</span>
-            
+    <div class="container text-center col-md-12">
+        <div class="heading">
+            <i class="fa fa-github" aria-hidden="true"></i>
+            <h1>GITHUB SEARCH</h1>
+            <p>Wana see their badly indented code??</p>
         </div>
-        <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('Profile') }}">Profile<span class="sr-only"></span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('Signin') }}">Sign In</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('Signup') }}">Sign Up</a>
-                </li>
-            </ul>
-            
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </nav>
-        <div>
+        <div class="button">
+            <span><button><a href="#">VIEW PITCHES</a></button><button>CREATE A PICTH</button><span>
+        </div>
+    </div>
             {% with messages=get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
