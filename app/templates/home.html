@@ -1,0 +1,57 @@
+{% extends 'bootstrap/base.html' %}
+{% import 'macros.html' as macro %}
+{% block navbar %}
+{% include 'navbar.html'%}
+{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/index.css')}}">
+{% endblock styles %}
+
+
+{% block content %}
+  
+    <h3 style="text-align: center; font-size: 40px; color:whitesmoke; text-decoration: underline; font-family: 'Roboto Condensed', sans-serif;">Choose Categories</h3>
+    <br>
+    <div>
+    <ul class="nav nav-pills nav-justified nav-fill" role="tablist" >
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#music" style="color: green; font-family: 'Roboto Condensed', sans-serif; font-size: 30px; text-decoration:underline; background-color: rgb(105, 202, 7)" >Music</a> <br>
+      </li> 
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#movies" style="color: green; font-size: 30px; font-family: 'Roboto Condensed', sans-serif; text-decoration:underline; background-color: white">Movies</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#art" style="color: green; font-family: 'Roboto Condensed', sans-serif; text-decoration:underline; font-size: 30px; background-color:rgb(105, 202, 7)">Art</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#general" style="color: green; font-size: 30px; font-family: 'Roboto Condensed', sans-serif; text-decoration:underline; background-color:white">General</a>
+      </li>
+    </ul>
+
+  </div>
+  <div class="tab-content">
+    <div id="music" class="container tab-pane active"><br>
+      {{ macro.display(music) }}
+
+    </div>
+    <div id="movies" class="container tab-pane fade"><br>
+      {{ macro.display(movies) }}
+    </div>
+    <div id="art" class="container tab-pane fade"><br>
+      {{ macro.display(art)}}
+    </div>
+    <div id="general" class="container tab-pane fade"><br>
+      {{ macro.display(general) }}
+    </div>
+<br><br><br>
+  </div>
+ </div>
+ <footer style="background-color: green;text-align: center">
+  <br> 
+  <p style="color:whitesmoke; font-family: 'Roboto Condensed', sans-serif;" >copyright @s-odhiambo</p>
+  <br> <br>
+</footer>
+
+{% endblock %}

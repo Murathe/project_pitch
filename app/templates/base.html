@@ -1,0 +1,26 @@
+{% extends 'bootstrap/base.html' %}
+
+
+{%block styles %}
+
+  {{ super() }}
+  {% endblock styles %}
+  {{ simplemde.css}}
+  {{ simplemde.js }}
+
+{% endblock %}
+
+
+{% block navbar %}
+
+    {% include 'navbar.html' %}
+    
+{% endblock %}
+
+<style>
+  body{
+  background-image: url("https://pikwizard.com/photos/13b7833ffd5c1067bc017554c1f9d555-m.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>

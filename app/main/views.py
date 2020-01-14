@@ -8,7 +8,6 @@ from .. import db
 
 @main.route('/', methods = ['GET','POST'])
 def index():
-
     '''
     Root page functions that return the home page and its data
     '''
