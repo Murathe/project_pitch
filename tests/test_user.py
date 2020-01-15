@@ -14,6 +14,3 @@ class UserTest(unittest.TestCase):
 
     def testVerifyPd(self):
         self.assertTrue(self.new_user.verify_password('1122334455'))
-
-     def testVerifyPd(self):
-        self.assertTrue(self.new_user.verify_password('1122334455'))

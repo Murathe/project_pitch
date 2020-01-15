@@ -16,11 +16,11 @@ class RegistrationForm(FlaskForm):
         
     def validate_email(self,data_field):
             if User.query.filter_by(email =data_field.data).first():
-                raise ValidationError('email is taken.')
+                raise ValidationError('email already registered.')
 
     def validate_username(self,data_field):
         if User.query.filter_by(username = data_field.data).first():
-            raise ValidationError('username is not available')
+            raise ValidationError('username already registered')
           
 class LoginForm(FlaskForm):
   email = StringField('Enter your email Address',validators = [Required(),Email()])

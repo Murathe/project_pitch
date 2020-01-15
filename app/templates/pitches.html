@@ -1,5 +1,6 @@
-{% import 'bootstrap/wtf.html' as wtf %} {% extends 'bootstrap/base.html' %} {%
-include 'navbar.html'%} {% block content %}
+{% import 'bootstrap/wtf.html' as wtf %} 
+{% extends 'bootstrap/base.html' %} 
+{% include 'navbar.html'%} {% block content %}
 
 {% block styles %}
   {{ super() }}
@@ -19,7 +20,7 @@ include 'navbar.html'%} {% block content %}
               <h2 style="font-family:'Roboto Condensed', sans-serif;">{{pitch.id}}</h2>
             </div>
             <p style="font-family:'Roboto Condensed', sans-serif;">{{ pitch.description }}</p>
-            <p style="font-family:'Roboto Condensed', sans-serif;">Posted by {{user.username}}.</p>
+            <p style="font-family:'Roboto Condensed', sans-serif;">by: {{user.username}}.</p>
           </a>
         </div>
         {% endfor %}
