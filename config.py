@@ -19,7 +19,7 @@ class ProdConfig(Config):
     '''
     Pruduction configuration child class
     '''
-    SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://moringa:izoh1234@localhost/murathe'
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
 
 class TestConfig(Config):
     '''
