@@ -1,31 +1,43 @@
-{% import 'bootstrap/wtf.html' as wtf %} 
-{% extends 'bootstrap/base.html' %} 
-{% include 'navbar.html'%} {% block content %}
+{% extends 'base.html'%}
+{% import 'macros.html' as macro%}
+{% import "bootstrap/wtf.html" as wtf %}
 
-{% block styles %}
-  {{ super() }}
-  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/index.css')}}">
-{% endblock styles %}
+{%block styles%}
+    {{ super() }}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Laila&display=swap" rel="stylesheet">
 
 
-<div class="container">
-  <div class="row">
-    <div class="jumbotron" style="background-color:green; font-family:'Roboto Condensed', sans-serif; color: whitesmoke;">
-      {{wtf.quick_form(form)}}
-      <ul style="list-style: none; font-family:'Roboto Condensed', sans-serif; color: whitesmoke;">
-        {% for pitch in pitches %}
-        <div class="list-group">
-          <a href="#">
-            <div class="list-item">
-              <h2 style="font-family:'Roboto Condensed', sans-serif;">{{pitch.id}}</h2>
-            </div>
-            <p style="font-family:'Roboto Condensed', sans-serif;">{{ pitch.description }}</p>
-            <p style="font-family:'Roboto Condensed', sans-serif;">by: {{user.username}}.</p>
-          </a>
-        </div>
-        {% endfor %}
-      </ul>
-  </div>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/styles.css')}}">
+
+
+{%endblock%}
+<!-- Content block -->
+{%block content%}
+<div class="container" style="text-align: center; font-family: 'Laila' ">
+
+    <div class="row">
+        <h3 class="t" style="font-size: 30px;">{{pitch.pitch_title}}</h3>
+        <hr>
+        <p class="c" style="font-size: 30px;">{{pitch.pitch_content}}</p>
+        <span>
+        <p class="d" style="font-size: 20px;">Posted on {{date}} by {{pitch.user.username| capitalize}}</p>
+        <a href="/pitch/{{pitch.id}}?like=1">
+            <i class="far fa-thumbs-up"></i>
+        </a>{{pitch.likes}} <a href="/pitch/{{pitch.id}}?dislike=1">
+            <i class="far fa-thumbs-down"></i>
+        </a>{{pitch.dislikes}}</span>
+
+    </div>
+    <div class="row">
+        <h4>Comments</h4>
+        <hr>
+        {% if current_user.is_authenticated %}
+            {{ wtf.quick_form(comment_form) }}
+        {%endif%}
+        {{macro.displayComments(comments)}}
+    </div>
+
 </div>
-{% endblock %}
-
+{%endblock%}

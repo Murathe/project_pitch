@@ -1,86 +1,144 @@
-from flask import render_template,request,redirect,url_for,abort, flash
+from flask import render_template,redirect,request,url_for,abort
 from . import main
-from flask_login import login_required, current_user
-from ..models import Pitch, User,Comment,Upvote,Downvote
-from .forms import PitchForm, CommentForm, UpvoteForm
-from flask.views import View,MethodView
-from .. import db 
+from ..models import User,Pitch,Comment
+from .. import db
+import datetime
+from flask_login import login_required,current_user
+from .forms import UpdateProfile,PitchForm,CommentForm
 
-@main.route('/', methods = ['GET','POST'])
+@main.route('/')
 def index():
     '''
-    Root page functions that return the home page and its data
+    view root page function that returns the index and its data
     '''
-    pitch = Pitch.query.filter_by().first()
-    title = 'Pitch'
-    music = Pitch.query.filter_by(category="music")
-    movies = Pitch.query.filter_by(category ="movies")
-    art = Pitch.query.filter_by(category ="art")
-    general = Pitch.query.filter_by(category ="general")
+    
+    title='one minute pitch'
+    interview_pitches = Pitch.get_pitches('interview')
+    product_pitches = Pitch.get_pitches('product')
+    promotion_pitches = Pitch.get_pitches('promotion')
 
-    upvotes = Upvote.get_all_upvotes(pitch_id=Pitch.id)
     
-    return render_template('home.html', title = title, pitch = pitch, movies=movies, music=music, art=art, general=general, upvotes=upvotes)
+    return render_template('index.html',title=title,interview=interview_pitches,product=product_pitches,promotion=promotion_pitches)
+
+@main.route('/user/<uname>')
+def profile(uname):
+    user = User.query.filter_by(username = uname).first()
+    pitches_count = Pitch.count_pitches(uname)
+    user_joined = user.date_joined.strftime('%b %d, %Y')
     
-@main.route('/pitches/new/', methods = ['GET','POST'])
+    if user is None:
+        abort(404)
+        return render_template('profile/profile.html', user = user, pitches = pitches_count,date = user_joined)
+    
+@main.route('/user/<uname>/update',methods = ['GET','POST'])
+@login_required
+def update_profile(uname):
+    user = User.query.filter_by(username = uname).first()
+    if user is None:
+        abort(404)
+        
+    form = UpdateProfile()
+    
+    if form.validate_on_submit():
+        user.bio = form.bio.data
+
+        db.session.add(user)
+        db.session.commit()
+
+        return redirect(url_for('.profile',uname=user.username))
+
+    return render_template('profile/update.html',form = form)
+
+@main.route('/user/<uname>/update/pic',methods= ['POST'])
+def update_pic(uname):
+    user = User.query.filter_by(username = uname).first()
+    if 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        path = f'photos/{filename}'
+        user.profile_pic_path = path
+        db.session.commit()
+    return redirect(url_for('main.profile',uname=uname))
+
+@main.route('/pitch/new', methods = ['GET','POST'])
 @login_required
 def new_pitch():
-    form = PitchForm()
-    my_upvotes = Upvote.query.filter_by(pitch_id = Pitch.id)
-    if form.validate_on_submit():
-        description = form.description.data
-        title = form.title.data
-        owner_id = current_user
-        category = form.category.data
-        print(current_user._get_current_object().id)
-        new_pitch = Pitch(owner_id =current_user._get_current_object().id, title = title,description=description,category=category)
-        db.session.add(new_pitch)
-        db.session.commit()
+    pitch_form = PitchForm()
+    if pitch_form.validate_on_submit():
+        title = pitch_form.title.data
+        pitch = pitch_form.text.data
+        category = pitch_form.category.data
         
-        return redirect(url_for('main.index'))
-    return render_template('pitches.html',form=form)
+        new_pitch = Pitch(pitch_title=title,pitch_content=pitch,category=category,user=current_user,likes=0,dislikes=0)
+        
+        new_pitch.save_pitch()
+        return redirect(url_for('.index'))
+    
+    title = 'New pitch'
+    return render_template('new_pitch.html',title = title,pitch_form=pitch_form )
 
-@main.route('/comment/new/<int:pitch_id>', methods = ['GET','POST'])
-@login_required
-def new_comment(pitch_id):
-    form = CommentForm()
-    pitch=Pitch.query.get(pitch_id)
-    if form.validate_on_submit():
-        description = form.description.data
+@main.route('/pitches/interview_pitches')
+def interview_pitches():
+    
+    pitches = Pitch.get_pitches('interview')
+    return render_template("interview_pitches.html", pitches = pitches)
 
-        new_comment = Comment(description = description, user_id = current_user._get_current_object().id, pitch_id = pitch_id)
-        db.session.add(new_comment)
+@main.route('/pitches/product_pitches')
+def product_pitches():
+    
+    pitches = Pitch.get_pitches('product')
+    return render_template("product_pitches.html", pitches = pitches)
+
+@main.route('/pitches/promotion_pitches')
+def promotion_pitches():
+    
+    pitches = Pitch.get_pitches('promotion')
+    return render_template("promotion_pitches.html", pitches = pitches)
+
+@main.route('/pitch/<int:id>', methods = ['GET','POST'])
+def pitch(id):
+    pitch = Pitch.get_pitch(id)
+    posted_date = pitch.posted.strftime('%b %d, %Y')
+
+    if request.args.get("like"):
+        pitch.likes = pitch.likes + 1
+
+        db.session.add(pitch)
         db.session.commit()
 
-        return redirect(url_for('.new_comment', pitch_id= pitch_id))
-
-    all_comments = Comment.query.filter_by(pitch_id = pitch_id).all()
-    return render_template('comments.html', form = form, comment = all_comments, pitch= pitch )
-   
-@main.route('/pitch/upvote/<int:pitch_id>/upvote', methods = ['GET', 'POST'])
-@login_required
-def upvote(pitch_id):
-    pitch = Pitch.query.get(pitch_id)
-    user = current_user
-    pitch_upvotes = Upvote.query.filter_by(pitch_id= pitch_id)
+        return redirect("/pitch/{pitch_id}".format(pitch_id=pitch.id))
     
-    if Upvote.query.filter(Upvote.user_id==user.id,Upvote.pitch_id==pitch_id).first():
-        return  redirect(url_for('main.index'))
+    elif request.args.get("dislike"):
+        pitch.dislikes = pitch.dislikes - 1
 
-    new_upvote = Upvote(pitch_id=pitch_id, user = current_user)
-    new_upvote.save_upvotes()
-    return redirect(url_for('main.index'))
+        db.session.add(pitch)
+        db.session.commit()
 
-@main.route('/pitch/downvote/<int:pitch_id>/downvote', methods = ['GET', 'POST'])
-@login_required
-def downvote(pitch_id):
-    pitch = Pitch.query.get(pitch_id)
-    user = current_user
-    pitch_downvotes = Downvote.query.filter_by(pitch_id= pitch_id)
+        return redirect("/pitch/{pitch_id}".format(pitch_id=pitch.id))
+
+    comment_form = CommentForm()
+    comments = Comment.get_comments(pitch)
+    if comment_form.validate_on_submit():
+        comment = comment_form.text.data
+
+        new_comment = Comment(comment = comment,user = current_user,pitch_id = pitch)
+
+        new_comment.save_comment()
+        
+
+    return render_template("pitches.html",comment_form=comment_form, pitch = pitch, comments = comments, date = posted_date)
+
+
+@main.route('/user/<uname>/pitches')
+def user_pitches(uname):
+    user = User.query.filter_by(username=uname).first()
+    pitches = Pitch.query.filter_by(user_id = user.id).all()
+    pitches_count = Pitch.count_pitches(uname)
+    user_joined = user.date_joined.strftime('%b %d, %Y')
+
+    return render_template("profile/pitches.html", user=user,pitches=pitches,pitches_count=pitches_count,date = user_joined)
+                                
+
+
+
     
-    if Downvote.query.filter(Downvote.user_id==user.id,Downvote.pitch_id==pitch_id).first():
-        return  redirect(url_for('main.index'))
 
-    new_downvote = Downvote(pitch_id=pitch_id, user = current_user)
-    new_downvote.save_downvotes()
-    return redirect(url_for('main.index'))

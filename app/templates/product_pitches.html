@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macro %}
+
+{%block content%}
+<link href="https://fonts.googleapis.com/css?family=Aladin&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative&display=swap" rel="stylesheet">
+
+<div class="jumbotron text-center" style="background-color: rgb(39, 10, 18); color: #fff; padding: 100px 25px; font-family: 'Indie Flower', cursive;">
+    <h1 class="prod" style="font-family: 'Aladin', cursive;">Product Pitches</h1>
+</div>
+<div class="container" style="font-family: 'Cinzel Decorative', cursive;">
+    <hr>
+    <div class="row">
+        {{macro.displayPitches(pitches)}}
+    </div>
+</div>
+{%endblock%}

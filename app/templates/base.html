@@ -1,26 +1,11 @@
-{% extends 'bootstrap/base.html' %}
+{% extends 'bootstrap/base.html'%}
 
-
-{% block styles %}
-
-  {{ super() }}
-  {% endblock styles %}
-  {{ simplemde.css}}
-  {{ simplemde.js }}
-
-{% endblock %}
-
-
+<!-- Navbar block  -->
 {% block navbar %}
-
     {% include 'navbar.html' %}
-    
 {% endblock %}
 
-<style>
-  body{
-  background-image: url("https://pikwizard.com/photos/13b7833ffd5c1067bc017554c1f9d555-m.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-</style>
+{%block styles %}
+  {{super()}}
+  <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Ranga" rel="stylesheet">
+{% endblock %}

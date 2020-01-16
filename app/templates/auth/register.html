@@ -1,15 +1,18 @@
-{% extends 'bootstrap/base.html'%}
+ 
+{% extends 'base.html'%}
 {% import 'bootstrap/wtf.html' as wtf%}
 
 {% block content %}
-  <div class="col-md-3"> </div>
-  <div class="col-md-6" style="margin-top: 8%; background-color: green;">
-    <br>
+<div class="container">
+<div class="row" style="margin-top: 50px;">
+<div class="col-md-2"> </div>
+<div class="col-md-8">
 
-    {{wtf.quick_form(registration_form)}}
+{{wtf.quick_form(registration_form)}}
 
-  <br>
-    <p style="font-family:'Roboto Condensed', sans-serif;"> Already have an account? <a href="{{url_for('auth.login')}}" style="font-family:'Roboto Condensed', sans-serif;">Sign in</a></p>
-  </div>
-  <div class="col-md-3"> </div>
+</div>
+<div class="col-md-2"></div>
+</div>
+</div>
+
 {% endblock%}
