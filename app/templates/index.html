@@ -18,47 +18,41 @@
 {%endblock%}
 <!-- Content block -->
 {%block content%}
-<div class="jumbotron text-center" style="background-color: rgb(29, 5, 12); color: #fff; padding: 55px 25px; font-family: 'Monoton', cursive;">
-    <h1 class="pitch" style="font-family: 'Julius Sans One', sans-serif;">Present Your Pitch</h1>
-</div>
-
-<!-- <div class="categories">
-    <h2 class="cat" style="text-align: center;">CATEGORIES</h2>
-    <h2>INTERVIEW PITCHES</h2>
-    <h2>PRODUCT PITCHES</h2>
-    <h2>PROMOTION PITCHES</h2> -->
-
-</div>
-
-<div class="container" style="padding-bottom: 20px;">
-    <a href="{{url_for('main.new_pitch')}}" class="btn btn-success" style="text-align: center;">Create pitch</a>
-</div>
-
-<div class="container" style= "font-family: 'Cormorant Upright', serif;">
-    <div class="row">
-        <div class="col-md-4" style="font-size: 20px;">
-            <div class="well well-lg">
-                <h3 class="h" style="font-family: 'Merienda One', cursive;">Interview Pitches</h3>
-                <p class="p" style="font-family: 'Courgette', cursive;">View all interview pitches and create your own pitch</p>
-                <a href="{{url_for('main.interview_pitches')}}" class="btn btn-primary -center">View</a>
+<div style="background-image: linear-gradient(to left top, #051937, #003548, #275051, #54695e, #7e8175); color: #fff; padding: 55px 25px; font-family: 'Monoton', cursive;">
+    <div class="jumbotron text-center" style="background-image: linear-gradient(to left top, #051937, #003548, #275051, #54695e, #7e8175); color: #fff; padding: 55px 25px; font-family: 'Monoton', cursive;">
+        <h1 class="pitch" style="font-family: 'Julius Sans One', sans-serif;">PITCH IT UP</h1>
+        <p>Take your best shot, it's either this minute or never</p>
+        <a href="{{url_for('main.new_pitch')}}" class="btn btn-info">Pitch It</a>
+    </div>
+    <div class="container-fluid" style= "font-family: 'Cormorant Upright', serif; background-image: linear-gradient(to left top, #051937, #003548, #275051, #54695e, #7e8175);">
+        <div class="">
+            <div class="row">
+                <div class="col-md-4" style="font-size: 20px;">
+                <h3 class="h" style="font-family: 'Merienda One', cursive;">Interview</h3>
+                    <div class="well well-lg">
+                        <a href="{{url_for('main.interview_pitches')}}" class="btn btn-primary -center">More</a>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4" style="font-size: 20px;" >
-            <div class="well well-lg">
-                <h3 class="h" style="font-family: 'Merienda One', cursive;">Product Pitches</h3>
-                <p class="p" style="font-family: 'Courgette', cursive;">create a pitch for your products</p>
-                <a href="{{url_for('main.product_pitches')}}" class="btn btn-primary -center">View</a>
+            <div class="row">
+                <div class="col-md-4" style="font-size: 20px;" >
+                <h3 class="h" style="font-family: 'Merienda One', cursive;">Product</h3>
+                    <div class="well well-lg">
+                        <p class="p" style="font-family: 'Courgette', cursive;">create a pitch for your products</p>
+                        <a href="{{url_for('main.product_pitches')}}" class="btn btn-primary -center">More</a>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4" style="font-size: 20px; ">
-            <div class="well well-lg">
-                <h3 class="h" style="font-family:'Merienda One', cursive;">Promotion Pitches</h3>
-                <p class="p" style="font-family: 'Courgette', cursive;">Promote your products right here</p>
-                <a href="{{url_for('main.promotion_pitches')}}" class="btn btn-primary -center">View</a>
+            <div class="row">
+                <div class="col-md-4" style="font-size: 20px; ">
+                <h3 class="h" style="font-family:'Merienda One', cursive;">Other Pitches</h3>
+                    <div class="well well-lg">
+                        <a href="{{url_for('main.promotion_pitches')}}" class="btn btn-primary -center">More</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-{%endblock%}
-
+    {%endblock%}
+<div>
