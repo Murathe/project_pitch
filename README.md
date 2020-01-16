@@ -11,7 +11,7 @@
 * CSS
 
 ## Live Link
-You can view this application by navigating on your browser to : https://piiiitch.herokuapp.com/
+You can view this application by navigating on your browser to : https://piiiiitch.herokuapp.com/
 
 # BDD
 
